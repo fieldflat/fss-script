@@ -33,15 +33,15 @@ class Gen:
         seed_s0, seed_s1 = Utils.get_random_bits(lmd), Utils.get_random_bits(lmd)
         seed_s0_err = Utils.get_random_bits(lmd)
         seed_s1_err = seed_s0_err
-        party0.seed_s[a_str[-1]] = seed_s0
-        party1.seed_s[a_str[-1]] = seed_s1
-        party0.seed_s[Utils.xor(a_str[-1], "1", 1)] = seed_s0_err
-        party1.seed_s[Utils.xor(a_str[-1], "1", 1)] = seed_s1_err
-        party0.seed_s_tmp[a_str[-1]] = seed_s0
-        party1.seed_s_tmp[a_str[-1]] = seed_s1
-        party0.seed_s_tmp[Utils.xor(a_str[-1], "1", 1)] = seed_s0_err
-        party1.seed_s_tmp[Utils.xor(a_str[-1], "1", 1)] = seed_s1_err
-        print("    a_str[-1] = {} because a_str = {}".format(a_str[-1], a_str))
+        party0.seed_s[a_str[0]] = seed_s0
+        party1.seed_s[a_str[0]] = seed_s1
+        party0.seed_s[Utils.xor(a_str[0], "1", 1)] = seed_s0_err
+        party1.seed_s[Utils.xor(a_str[0], "1", 1)] = seed_s1_err
+        party0.seed_s_tmp[a_str[0]] = seed_s0
+        party1.seed_s_tmp[a_str[0]] = seed_s1
+        party0.seed_s_tmp[Utils.xor(a_str[0], "1", 1)] = seed_s0_err
+        party1.seed_s_tmp[Utils.xor(a_str[0], "1", 1)] = seed_s1_err
+        print("    a_str[0] = {} because a_str = {}".format(a_str[0], a_str))
         print("    party0.seed_s['0'] = {}".format(party0.seed_s['0']))
         print("    party0.seed_s['1'] = {}".format(party0.seed_s['1']))
         print("    party1.seed_s['0'] = {}".format(party1.seed_s['0']))
@@ -54,15 +54,15 @@ class Gen:
         seed_t1 = Utils.xor("1", seed_t0, 1)
         seed_t0_err = Utils.get_random_bits(1)
         seed_t1_err = seed_t0_err
-        party0.seed_t[a_str[-1]] = seed_t0
-        party1.seed_t[a_str[-1]] = seed_t1
-        party0.seed_t[Utils.xor(a_str[-1], "1", 1)] = seed_t0_err
-        party1.seed_t[Utils.xor(a_str[-1], "1", 1)] = seed_t1_err
-        party0.seed_t_tmp[a_str[-1]] = seed_t0
-        party1.seed_t_tmp[a_str[-1]] = seed_t1
-        party0.seed_t_tmp[Utils.xor(a_str[-1], "1", 1)] = seed_t0_err
-        party1.seed_t_tmp[Utils.xor(a_str[-1], "1", 1)] = seed_t1_err
-        print("    a_str[-1] = {} because a_str = {}".format(a_str[-1], a_str))
+        party0.seed_t[a_str[0]] = seed_t0
+        party1.seed_t[a_str[0]] = seed_t1
+        party0.seed_t[Utils.xor(a_str[0], "1", 1)] = seed_t0_err
+        party1.seed_t[Utils.xor(a_str[0], "1", 1)] = seed_t1_err
+        party0.seed_t_tmp[a_str[0]] = seed_t0
+        party1.seed_t_tmp[a_str[0]] = seed_t1
+        party0.seed_t_tmp[Utils.xor(a_str[0], "1", 1)] = seed_t0_err
+        party1.seed_t_tmp[Utils.xor(a_str[0], "1", 1)] = seed_t1_err
+        print("    a_str[0] = {} because a_str = {}".format(a_str[0], a_str))
         print("    party0.seed_t['0'] = {}".format(party0.seed_t['0']))
         print("    party0.seed_t['1'] = {}".format(party0.seed_t['1']))
         print("    party1.seed_t['0'] = {}".format(party1.seed_t['0']))
@@ -71,11 +71,11 @@ class Gen:
 
         # step4 - step13
         print("step4: for iteration ...\n")
-        for i in range(1, n):
+        for i in range(0, n-1):
             # step5: apply seed S[i] to PRG
             print("step5: apply seed S[i] to PRG ...")
-            party0.st = PRG(party0.seed_s_tmp[a_str[-i]])
-            party1.st = PRG(party1.seed_s_tmp[a_str[-i]])
+            party0.st = PRG(party0.seed_s_tmp[a_str[i]])
+            party1.st = PRG(party1.seed_s_tmp[a_str[i]])
             party0.st_divide["s"]["0"] = party0.st[0:lmd]
             party0.st_divide["s"]["1"] = party0.st[lmd:2*lmd]
             party0.st_divide["t"]["0"] = party0.st[2*lmd]
@@ -84,12 +84,12 @@ class Gen:
             party1.st_divide["s"]["1"] = party1.st[lmd:2*lmd]
             party1.st_divide["t"]["0"] = party1.st[2*lmd]
             party1.st_divide["t"]["1"] = party1.st[2*lmd+1]
-            print("    party0.st = PRG({}) = \t\t{}  (length: {})".format(party0.seed_s_tmp[a_str[-i]], party0.st, len(party0.st)))
+            print("    party0.st = PRG({}) = \t\t{}  (length: {})".format(party0.seed_s_tmp[a_str[i]], party0.st, len(party0.st)))
             print("    party0.st_divide['s']['0'] = \t" + " " * 0 + "{}".format(party0.st_divide['s']['0']))
             print("    party0.st_divide['s']['1'] = \t" + " " * lmd + "{}".format(party0.st_divide['s']['1']))
             print("    party0.st_divide['t']['0'] = \t" + " " * (2*lmd) + "{}".format(party0.st_divide['t']['0']))
             print("    party0.st_divide['t']['1'] = \t" + " " * (2*lmd+1) + "{}".format(party0.st_divide['t']['1']))
-            print("    party1.st = PRG({}) = \t\t{}  (length: {})".format(party1.seed_s_tmp[a_str[-i]], party1.st, len(party1.st)))
+            print("    party1.st = PRG({}) = \t\t{}  (length: {})".format(party1.seed_s_tmp[a_str[i]], party1.st, len(party1.st)))
             print("    party1.st_divide['s']['0'] = \t" + " " * 0 + "{}".format(party1.st_divide['s']['0']))
             print("    party1.st_divide['s']['1'] = \t" + " " * lmd + "{}".format(party1.st_divide['s']['1']))
             print("    party1.st_divide['t']['0'] = \t" + " " * (2*lmd) + "{}".format(party1.st_divide['t']['0']))
@@ -99,10 +99,10 @@ class Gen:
             # step6: generate cs_party0, cs_party1
             print("step6: generate cs_party0, cs_party1 ...")
             cs_party0 = {
-                a_str[-(i+1)]: Utils.get_random_bits(lmd),
+                a_str[(i+1)]: Utils.get_random_bits(lmd),
             }
             cs_party1 = {
-                a_str[-(i+1)]: Utils.get_random_bits(lmd),
+                a_str[(i+1)]: Utils.get_random_bits(lmd),
             }
             print("    cs_party0 = {}".format(cs_party0))
             print("    cs_party1 = {}".format(cs_party1))
@@ -111,10 +111,10 @@ class Gen:
             # step7: generate cs_party0_err, cs_party1_err
             print("step7: generate cs_party0_err, cs_party1_err ...")
             cs_party0_err = Utils.get_random_bits(lmd)
-            cs_party1_err = Utils.xor(cs_party0_err, party0.st_divide['s'][Utils.xor(a_str[-(i+1)], "1", 1)], lmd)
-            cs_party1_err = Utils.xor(cs_party1_err, party1.st_divide['s'][Utils.xor(a_str[-(i+1)], "1", 1)], lmd)
-            cs_party0[Utils.xor(a_str[-(i+1)], "1", 1)] = cs_party0_err
-            cs_party1[Utils.xor(a_str[-(i+1)], "1", 1)] = cs_party1_err
+            cs_party1_err = Utils.xor(cs_party0_err, party0.st_divide['s'][Utils.xor(a_str[(i+1)], "1", 1)], lmd)
+            cs_party1_err = Utils.xor(cs_party1_err, party1.st_divide['s'][Utils.xor(a_str[(i+1)], "1", 1)], lmd)
+            cs_party0[Utils.xor(a_str[(i+1)], "1", 1)] = cs_party0_err
+            cs_party1[Utils.xor(a_str[(i+1)], "1", 1)] = cs_party1_err
             print("    cs_party0 = {}".format(cs_party0))
             print("    cs_party1 = {}".format(cs_party1))
             print("step7: done. \n")
@@ -122,14 +122,14 @@ class Gen:
             # step8: generate ct_party0, ct_party1
             print("step8: generate ct_party0, ct_party1 ... ")
             ct_party0_bit = Utils.get_random_bits(1)
-            ct_party1_bit = Utils.xor(ct_party0_bit, party0.st_divide['t'][a_str[-(i+1)]], 1)
-            ct_party1_bit = Utils.xor(ct_party1_bit, party1.st_divide['t'][a_str[-(i+1)]], 1)
+            ct_party1_bit = Utils.xor(ct_party0_bit, party0.st_divide['t'][a_str[(i+1)]], 1)
+            ct_party1_bit = Utils.xor(ct_party1_bit, party1.st_divide['t'][a_str[(i+1)]], 1)
             ct_party1_bit = Utils.xor(ct_party1_bit, "1", 1)
             ct_party0 = {
-                a_str[-(i+1)]: ct_party0_bit,
+                a_str[(i+1)]: ct_party0_bit,
             }
             ct_party1 = {
-                a_str[-(i+1)]: ct_party1_bit,
+                a_str[(i+1)]: ct_party1_bit,
             }
             print("    ct_party0 = {}".format(ct_party0))
             print("    ct_party1 = {}".format(ct_party1))
@@ -138,10 +138,10 @@ class Gen:
             # step9: generate ct_party0_err, ct_party1_err
             print("step9: generate ct_party0_err, ct_party1_err ... ")
             ct_party0_err_bit = Utils.get_random_bits(1)
-            ct_party1_err_bit = Utils.xor(ct_party0_err_bit, party0.st_divide['t'][Utils.xor(a_str[-(i+1)], "1", 1)], 1)
-            ct_party1_err_bit = Utils.xor(ct_party1_err_bit, party1.st_divide['t'][Utils.xor(a_str[-(i+1)], "1", 1)], 1)
-            ct_party0[Utils.xor(a_str[-(i+1)], "1", 1)] = ct_party0_err_bit
-            ct_party1[Utils.xor(a_str[-(i+1)], "1", 1)] = ct_party1_err_bit
+            ct_party1_err_bit = Utils.xor(ct_party0_err_bit, party0.st_divide['t'][Utils.xor(a_str[(i+1)], "1", 1)], 1)
+            ct_party1_err_bit = Utils.xor(ct_party1_err_bit, party1.st_divide['t'][Utils.xor(a_str[(i+1)], "1", 1)], 1)
+            ct_party0[Utils.xor(a_str[(i+1)], "1", 1)] = ct_party0_err_bit
+            ct_party1[Utils.xor(a_str[(i+1)], "1", 1)] = ct_party1_err_bit
             print("    ct_party0 = {}".format(ct_party0))
             print("    ct_party1 = {}".format(ct_party1))
             print("step9: done. \n")
@@ -169,7 +169,7 @@ class Gen:
 
             # step11: generate next PRG's seed S
             print("step11: generate next PRG's seed S ...")
-            tau0 = party0.seed_t_tmp[a_str[-i]]
+            tau0 = party0.seed_t_tmp[a_str[i]]
             if tau0 == '0':
                 party0.seed_s_tmp["0"] = \
                     Utils.xor(party0.st_divide["s"]["0"], cs_party0["0"], lmd)
@@ -184,7 +184,7 @@ class Gen:
                 print("ERROR")
                 sys.exit(1)
 
-            tau1 = party1.seed_t_tmp[a_str[-i]]
+            tau1 = party1.seed_t_tmp[a_str[i]]
             if tau1 == '0':
                 party1.seed_s_tmp["0"] = \
                     Utils.xor(party1.st_divide["s"]["0"], cs_party0["0"], lmd)
@@ -234,8 +234,8 @@ class Gen:
         # step14 - step18: set w
         print("step14 - step18: set w ... ")
         w = 0
-        prg_party_0 = PRG(party0.seed_s_tmp[a_str[0]])
-        prg_party_1 = PRG(party1.seed_s_tmp[a_str[0]])
+        prg_party_0 = PRG(party0.seed_s_tmp[a_str[n-1]])
+        prg_party_1 = PRG(party1.seed_s_tmp[a_str[n-1]])
         if prg_party_0 != prg_party_1:
             prg_party_0 = prg_party_0
             prg_party_1 = prg_party_1

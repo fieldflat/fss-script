@@ -34,16 +34,16 @@ class Eval:
 
         # step4: set S
         print("step4: set S ... ")
-        S = s0 if x[-1] == '0' else s1
+        S = s0 if x[0] == '0' else s1
         print("    S  = {}".format(S))
         print("step4: done. \n")
         # step5: set T
         print("step5: set T ... ")
-        T = t0 if x[-1] == '0' else t1
+        T = t0 if x[0] == '0' else t1
         print("    T  = {}".format(T))
         print("step5: done. \n")
 
-        for i in range(1, n):
+        for i in range(0, n-1):
             # step7: parse G(S) as s0|s1|t0|t1
             print("step7: parse G(S) as s0|s1|t0|t1 ...")
             gs = PRG(S)
@@ -62,7 +62,7 @@ class Eval:
 
             # step8: parse CW
             print("step8: parse CW ...")
-            cw = cw_list[2*(i-1) + int(T)]
+            cw = cw_list[2*i + int(T)]
             cs = {}
             ct = {}
             cs[T] = {
@@ -79,19 +79,19 @@ class Eval:
 
             # step9: set S
             print("step9: set S ...")
-            print("    x[-(i+1)] = {} because i+1 = {} and x = {}".format(x[-(i+1)], i+1, x))
-            print("    s[x[-(i+1)]] = {}".format(s[x[-(i+1)]]))
-            print("    cs[T][x[-(i+1)]] = {}".format(cs[T][x[-(i+1)]]))
-            S = Utils.xor(s[x[-(i+1)]], cs[T][x[-(i+1)]], lmd)
+            print("    x[(i+1)] = {} because i+1 = {} and x = {}".format(x[(i+1)], i+1, x))
+            print("    s[x[(i+1)]] = {}".format(s[x[(i+1)]]))
+            print("    cs[T][x[(i+1)]] = {}".format(cs[T][x[(i+1)]]))
+            S = Utils.xor(s[x[(i+1)]], cs[T][x[(i+1)]], lmd)
             print("    S = {}".format(S))
             print("step9: done. \n")
 
             # step10: set T
             print("step10: set T ...")
-            print("    x[-(i+1)] = {} because i+1 = {} and x = {}".format(x[-(i+1)], i+1, x))
-            print("    t[x[-(i+1)]] = {}".format(t[x[-(i+1)]]))
-            print("    ct[T][x[-(i+1)]] = {}".format(ct[T][x[-(i+1)]]))
-            T = Utils.xor(t[x[-(i+1)]], ct[T][x[-(i+1)]], 1)
+            print("    x[(i+1)] = {} because i+1 = {} and x = {}".format(x[(i+1)], i+1, x))
+            print("    t[x[(i+1)]] = {}".format(t[x[(i+1)]]))
+            print("    ct[T][x[(i+1)]] = {}".format(ct[T][x[(i+1)]]))
+            T = Utils.xor(t[x[(i+1)]], ct[T][x[(i+1)]], 1)
             print("    T = {}".format(T))
             print("step10: done. \n")
 

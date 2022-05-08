@@ -25,7 +25,7 @@ if __name__ == '__main__':
     print("\n====== Eval Protocol Phase ======\n")
 
     # Eval Protocol
-    x = 10
+    x = 14
     ans0 = Eval.dpf_2party(0, k0_list, x, lmd, mod, PRG)
     print(ans0)
     print("\n\n")
