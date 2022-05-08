@@ -34,10 +34,8 @@ mod is modulo number.
 
     # Eval Protocol
     ans0 = Eval.dpf_2party(0, k0_list, x, lmd, mod, PRG)
-    print(ans0)
     print("\n\n")
     ans1 = Eval.dpf_2party(1, k1_list, x, lmd, mod, PRG)
-    print(ans1)
 
     print("\n====== Decryption Phase ======\n")
 
